@@ -43,6 +43,9 @@ zinit light sharkdp/fd
 zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat"
 zinit light sharkdp/bat
 
+zinit ice from"gh-r" as"program" mv"aws-vault* -> aws-vault"
+zinit light 99designs/aws-vault
+
 zinit snippet OMZP::ssh-agent
 
 . $HOME/.asdf/asdf.sh
@@ -59,5 +62,10 @@ zinit wait lucid for \
 	as"program" from"gh-r" pick"pmy*/pmy" atload'eval "$(pmy init)"' \
 					relastle/pmy \
 	atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-					zdharma/fast-syntax-highlighting \
+					zdharma/fast-syntax-highlighting
+
+export AWS_VAULT_BACKEND=pass
+export AWS_VAULT_PASS_PREFIX=aws-vault
+export AWS_VAULT_SESSION_TOKEN_TTL=3h
+export GPG_TTY=$(tty)
 
