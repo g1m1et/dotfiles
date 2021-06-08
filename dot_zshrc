@@ -1,0 +1,63 @@
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-rust \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-bin-gem-node
+
+### End of Zinit's installer chunk
+
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=100000
+
+setopt share_history
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_no_store
+setopt hist_reduce_blanks
+
+zinit ice from"gh-r" as"program" atload'eval "$(starship init zsh)"'
+zinit light starship/starship
+
+zinit ice from"gh-r" as"program" mv"exa* -> exa" pick"bin/exa"
+zinit light ogham/exa
+
+zinit ice from"gh-r" as"program" mv"fd* -> fd" pick"fd/fd"
+zinit light sharkdp/fd
+
+zinit ice from"gh-r" as"program" mv"bat* -> bat" pick"bat/bat"
+zinit light sharkdp/bat
+
+zinit snippet OMZP::ssh-agent
+
+. $HOME/.asdf/asdf.sh
+fpath=(${ASDF_DIR}/completions $fpath)
+
+zinit wait lucid for \
+	atload'!_zsh_autosuggest_start'	zsh-users/zsh-autosuggestions \
+	blockf				zsh-users/zsh-completions \
+					OMZL::git.zsh \
+	atload"unalias grv"		OMZP::git \
+					OMZP::aws \
+					blimmer/zsh-aws-vault \
+					OMZP::fzf \
+	as"program" from"gh-r" pick"pmy*/pmy" atload'eval "$(pmy init)"' \
+					relastle/pmy \
+	atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+					zdharma/fast-syntax-highlighting \
+

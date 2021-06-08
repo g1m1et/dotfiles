@@ -1,0 +1,17 @@
+[user]
+	name = Satoshi Ebihara
+	email = {{ .email | quote }}
+[core]
+	editor = vim
+	autocrlf = input
+	excludesfile = ~/.gitignore
+[merge]
+	ff = false
+[pull]
+	rebase = true
+[color]
+	ui = auto
+[push]
+	default = upstream
+[commit]
+	template = ~/.commit_template

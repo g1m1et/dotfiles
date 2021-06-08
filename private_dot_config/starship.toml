@@ -1,0 +1,9 @@
+command_timeout = 1000
+add_newline = false
+
+[cmd_duration]
+min_time = 4
+
+[time]
+disabled = false
+

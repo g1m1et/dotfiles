@@ -1,0 +1,11 @@
+.DS_Store
+
+*.pyc
+
+Session.vim
+.netrwhist
+
+build
+dist
+*egg-info
+
